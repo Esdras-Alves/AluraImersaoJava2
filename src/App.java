@@ -11,7 +11,8 @@ public class App {
     public static void main(String[] args) throws Exception {
 
         // fazer uma conexão HTTP e buscar os top 10 filmes
-        String url = "https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/TopMovies.json";
+        // String url = "https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/TopMovies.json";
+        String url = "https://api.nasa.gov/planetary/apod?api_key=dCR12PdP7bvJekKHMGAf8RrKmS4D0pwmWSN6mfS2";
         URI endereco = URI.create(url);
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder(endereco).GET().build();
@@ -23,25 +24,20 @@ public class App {
         List<Map<String, String>> listaDeFilmes = parser.parse(body);
 
         // exibir e manipular os dados
-        System.out.println("Seja Bem-Vindo! Esses são os 10 filmes mais bem avaliados:\n");
-        int count = 1;
+
+        var geradora = new GeradoraDeFigurinhas();
         for (Map<String, String> filme : listaDeFilmes) {
 
             String urlImagem = filme.get("image");
-            String titulo = filme.get("fullTitle");
+            String titulo = filme.get("title");
 
             InputStream inputStream = new URL(urlImagem).openStream();
             String nomeArquivo = titulo + ".png";
 
-            var geradora = new GeradoraDeFigurinhas();
             geradora.cria(nomeArquivo, inputStream);
-            System.out.println(filme.get("image"));
-            System.out.println(count + "º" + " lugar");
-            System.out.println("Título: " + titulo);
-            System.out.println("Classificação: " + filme.get("imDbRating"));
-            System.out.println("⭐".repeat((int) Double.parseDouble(filme.get("imDbRating"))));
+
+            System.out.println(titulo);
             System.out.println();
-            count++;
         }
     }
 }
