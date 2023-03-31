@@ -7,7 +7,8 @@ import java.io.InputStream;
 
 public class GeradoraDeFigurinhas {
 
-    public void cria(String name, InputStream inputStream) throws Exception {
+    public void cria(InputStream inputStream, String nomeArquivo) throws Exception {
+
         // leitura da imagem
 
         // InputStream inputStream =
@@ -35,6 +36,6 @@ public class GeradoraDeFigurinhas {
         graphics.drawString("TOPZERA", 110, novaAltura - 80);
 
         // escrever a nova imagem em um arquivo
-        ImageIO.write(novaImagem, "png", new File("saida/" + name));
+        ImageIO.write(novaImagem, "png", new File(nomeArquivo));
     }
 }
